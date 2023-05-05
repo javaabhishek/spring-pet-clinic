@@ -3,7 +3,7 @@ package com.asoft.springpetclinic.services;
 import java.util.Set;
 
 public interface CrudBaseService<T,ID> {
-    T findById(T id);
+    T findById(ID id);
 
     T save(T owner);
 
@@ -11,5 +11,5 @@ public interface CrudBaseService<T,ID> {
 
     void delete(T model);
 
-    void deleteById(T modelId);
+    void deleteById(ID modelId);
 }

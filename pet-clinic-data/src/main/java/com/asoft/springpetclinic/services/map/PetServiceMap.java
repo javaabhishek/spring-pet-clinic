@@ -1,0 +1,34 @@
+package com.asoft.springpetclinic.services.map;
+
+import com.asoft.springpetclinic.model.Pet;
+import com.asoft.springpetclinic.services.CrudBaseService;
+
+import java.util.Set;
+
+public class PetServiceMap extends AbstractMapService<Pet,Long> implements CrudBaseService<Pet,Long> {
+
+    @Override
+    public Pet findById(Long id) {
+        return super.findById(id);
+    }
+
+    @Override
+    public Pet save(Pet pet) {
+        return super.save(pet.getId(),pet);
+    }
+
+    @Override
+    public Set<Pet> findAll() {
+        return super.findAll();
+    }
+
+    @Override
+    public void deleteById(Long modelId) {
+        super.deleteById(modelId);
+    }
+
+    @Override
+    public void delete(Pet model) {
+        super.delete(model);
+    }
+}
