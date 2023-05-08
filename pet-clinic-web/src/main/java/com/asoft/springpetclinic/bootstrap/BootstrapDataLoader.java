@@ -38,6 +38,7 @@ public class BootstrapDataLoader implements CommandLineRunner {
         vet1.setLastName("Vet_1_LastName");
 
         vetService.save(vet1);
+
         Vet vet2=new Vet();
         vet2.setId(2l);
         vet2.setFirstName("Vet_2_FirstName");
