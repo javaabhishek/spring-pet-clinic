@@ -18,6 +18,7 @@ public class BootstrapDataLoader implements CommandLineRunner {
     public BootstrapDataLoader(){
         ownerService=new OwnerServiceMap();
         vetService=new VetServiceMap();
+
     }
     @Override
     public void run(String... args) throws Exception {
