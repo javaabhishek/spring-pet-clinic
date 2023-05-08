@@ -1,19 +1,26 @@
 package com.asoft.springpetclinic.services.map;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import com.asoft.springpetclinic.model.BaseEntity;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class AbstractMapService <T,ID>{
+public abstract class AbstractMapService <T extends BaseEntity,ID extends Long>{
 
-    protected Map<ID,T> map=new HashMap<>();
+    protected Map<Long,T> map=new HashMap<>();
     protected  T findById(ID id){
         return map.get(id);
     }
 
-    protected T save(ID id,T t){
-        map.put(id,t);
+    protected T save(T t){
+        if(t !=null){
+            if(t.getId()==null){
+                t.setId(getMaxId());
+            }
+            map.put(t.getId(),t);
+        }else {
+            throw new RuntimeException("Object can not be null");
+        }
         return t;
     }
 
@@ -31,5 +38,15 @@ public abstract class AbstractMapService <T,ID>{
 
     protected void deleteById(ID modelId){
         map.remove(modelId);
+    }
+
+    protected Long getMaxId(){
+        Long maxId=null;
+        try{
+            maxId=Collections.max(map.keySet())+1;
+        }catch (NoSuchElementException e){
+            maxId=1l;
+        }
+        return maxId;
     }
 }
