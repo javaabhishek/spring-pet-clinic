@@ -5,7 +5,7 @@ import java.util.Set;
 public interface CrudBaseService<T,ID> {
     T findById(ID id);
 
-    T save(T owner);
+    T save(T model);
 
     Set<T> findAll();
 
