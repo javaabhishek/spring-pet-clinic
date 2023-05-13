@@ -1,11 +1,9 @@
 package com.asoft.springpetclinic.bootstrap;
 
-import com.asoft.springpetclinic.model.Owner;
-import com.asoft.springpetclinic.model.Pet;
-import com.asoft.springpetclinic.model.PetType;
-import com.asoft.springpetclinic.model.Vet;
+import com.asoft.springpetclinic.model.*;
 import com.asoft.springpetclinic.services.OwnerService;
 import com.asoft.springpetclinic.services.PetTypeService;
+import com.asoft.springpetclinic.services.SpecialitiesService;
 import com.asoft.springpetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,12 +16,14 @@ public class BootstrapDataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialitiesService specialitiesService;
 
 
-    public BootstrapDataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public BootstrapDataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialitiesService specialitiesService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialitiesService = specialitiesService;
     }
 
     @Override
@@ -66,15 +66,31 @@ public class BootstrapDataLoader implements CommandLineRunner {
         onr2.getPets().add(tejalPetCat);
         ownerService.save(onr2);
 
+        Specialty radiology=new Specialty();
+        radiology.setDescription("Radiology");
+        Specialty dentist=new Specialty();
+        dentist.setDescription("Dentist");
+        Specialty supergery=new Specialty();
+        supergery.setDescription("Supergery");
+
+        radiology=specialitiesService.save(radiology);
+        dentist=specialitiesService.save(dentist);
+        supergery=specialitiesService.save(supergery);
+
         Vet vet1=new Vet();
         vet1.setFirstName("Vet_1_FirstName");
         vet1.setLastName("Vet_1_LastName");
+        vet1.getSpecialties().add(radiology);
+        vet1.getSpecialties().add(dentist);
 
         vetService.save(vet1);
 
         Vet vet2=new Vet();
         vet2.setFirstName("Vet_2_FirstName");
         vet2.setLastName("Vet_2_LastName");
+        vet2.getSpecialties().add(supergery);
+        vet2.getSpecialties().add(radiology);
+
         vetService.save(vet2);
 
         System.out.println(ownerService.findAll().size());
