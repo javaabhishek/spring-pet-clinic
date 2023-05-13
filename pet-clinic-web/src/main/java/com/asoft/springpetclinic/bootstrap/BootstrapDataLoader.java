@@ -3,7 +3,7 @@ package com.asoft.springpetclinic.bootstrap;
 import com.asoft.springpetclinic.model.*;
 import com.asoft.springpetclinic.services.OwnerService;
 import com.asoft.springpetclinic.services.PetTypeService;
-import com.asoft.springpetclinic.services.SpecialitiesService;
+import com.asoft.springpetclinic.services.SpecialityService;
 import com.asoft.springpetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,10 +16,10 @@ public class BootstrapDataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
-    private final SpecialitiesService specialitiesService;
+    private final SpecialityService specialitiesService;
 
 
-    public BootstrapDataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialitiesService specialitiesService) {
+    public BootstrapDataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialitiesService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
