@@ -28,6 +28,10 @@ public class BootstrapDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        //loadData();
+    }
+
+    private void loadData() {
         PetType dog=new PetType();
         dog.setName("Dog");
         PetType savedDogPetType=petTypeService.save(dog);
@@ -96,5 +100,5 @@ public class BootstrapDataLoader implements CommandLineRunner {
         System.out.println(ownerService.findAll().size());
         System.out.println(vetService.findAll().size());
         System.out.println(petTypeService.findAll().size());
-     }
+    }
 }
