@@ -1,6 +1,6 @@
 package com.asoft.springpetclinic.services.map;
 
-import com.asoft.springpetclinic.model.Specialty;
+import com.asoft.springpetclinic.model.Speciality;
 import com.asoft.springpetclinic.model.Vet;
 import com.asoft.springpetclinic.services.SpecialityService;
 import com.asoft.springpetclinic.services.VetService;
@@ -25,10 +25,10 @@ public class VetServiceMap extends AbstractMapService<Vet,Long> implements VetSe
     @Override
     public Vet save(Vet vet) {
         if(vet!=null){
-            if(vet.getSpecialties().size()>0){
-                vet.getSpecialties().forEach(specialty -> {
+            if(vet.getSpecialities().size()>0){
+                vet.getSpecialities().forEach(specialty -> {
                     if(specialty.getId()==null){
-                        Specialty savedSpecility= specialitiesService.save(specialty);
+                        Speciality savedSpecility= specialitiesService.save(specialty);
                         specialty.setId(savedSpecility.getId());
                     }
                 });

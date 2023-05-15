@@ -66,11 +66,11 @@ public class BootstrapDataLoader implements CommandLineRunner {
         onr2.getPets().add(tejalPetCat);
         ownerService.save(onr2);
 
-        Specialty radiology=new Specialty();
+        Speciality radiology=new Speciality();
         radiology.setDescription("Radiology");
-        Specialty dentist=new Specialty();
+        Speciality dentist=new Speciality();
         dentist.setDescription("Dentist");
-        Specialty supergery=new Specialty();
+        Speciality supergery=new Speciality();
         supergery.setDescription("Supergery");
 
         radiology=specialitiesService.save(radiology);
@@ -80,16 +80,16 @@ public class BootstrapDataLoader implements CommandLineRunner {
         Vet vet1=new Vet();
         vet1.setFirstName("Vet_1_FirstName");
         vet1.setLastName("Vet_1_LastName");
-        vet1.getSpecialties().add(radiology);
-        vet1.getSpecialties().add(dentist);
+        vet1.getSpecialities().add(radiology);
+        vet1.getSpecialities().add(dentist);
 
         vetService.save(vet1);
 
         Vet vet2=new Vet();
         vet2.setFirstName("Vet_2_FirstName");
         vet2.setLastName("Vet_2_LastName");
-        vet2.getSpecialties().add(supergery);
-        vet2.getSpecialties().add(radiology);
+        vet2.getSpecialities().add(supergery);
+        vet2.getSpecialities().add(radiology);
 
         vetService.save(vet2);
 

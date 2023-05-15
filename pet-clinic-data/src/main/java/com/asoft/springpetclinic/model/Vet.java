@@ -1,19 +1,23 @@
 package com.asoft.springpetclinic.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "vets")
 public class Vet extends Person{
-    private Set<Specialty> specialties=new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "vet_specialities",joinColumns = @JoinColumn(name = "vet_id")
+    ,inverseJoinColumns = @JoinColumn(name = "speciality_id"))
+    private Set<Speciality> specialities=new HashSet<>();
 
-    public Set<Specialty> getSpecialties() {
-        return specialties;
+    public Set<Speciality> getSpecialities() {
+        return specialities;
     }
 
-    public void setSpecialties(Set<Specialty> specialties) {
-        this.specialties = specialties;
+    public void setSpecialities(Set<Speciality> specialities) {
+        this.specialities = specialities;
     }
 }

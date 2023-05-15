@@ -1,27 +1,27 @@
 package com.asoft.springpetclinic.services.map;
 
-import com.asoft.springpetclinic.model.Specialty;
+import com.asoft.springpetclinic.model.Speciality;
 import com.asoft.springpetclinic.services.SpecialityService;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
-public class SpecialityServiceMap extends AbstractMapService<Specialty,Long> implements SpecialityService {
+public class SpecialityServiceMap extends AbstractMapService<Speciality,Long> implements SpecialityService {
 
 
     @Override
-    public Specialty findById(Long id) {
+    public Speciality findById(Long id) {
         return super.findById(id);
     }
 
     @Override
-    public Specialty save(Specialty model) {
+    public Speciality save(Speciality model) {
         return super.save(model);
     }
 
     @Override
-    public Set<Specialty> findAll() {
+    public Set<Speciality> findAll() {
         return super.findAll();
     }
 
@@ -31,7 +31,7 @@ public class SpecialityServiceMap extends AbstractMapService<Specialty,Long> imp
     }
 
     @Override
-    public void delete(Specialty model) {
+    public void delete(Speciality model) {
         super.delete(model);
     }
 }
