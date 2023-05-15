@@ -1,8 +1,11 @@
 package com.asoft.springpetclinic.model;
 
+import jakarta.persistence.Entity;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Vet extends Person{
     private Set<Specialty> specialties=new HashSet<>();
 
