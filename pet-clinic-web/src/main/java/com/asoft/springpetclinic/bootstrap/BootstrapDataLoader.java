@@ -1,10 +1,7 @@
 package com.asoft.springpetclinic.bootstrap;
 
 import com.asoft.springpetclinic.model.*;
-import com.asoft.springpetclinic.services.OwnerService;
-import com.asoft.springpetclinic.services.PetTypeService;
-import com.asoft.springpetclinic.services.SpecialityService;
-import com.asoft.springpetclinic.services.VetService;
+import com.asoft.springpetclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +14,19 @@ public class BootstrapDataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialitiesService;
+    private final VisitService visitService;
+    private final PetService petService;
 
 
-    public BootstrapDataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialitiesService) {
+
+    public BootstrapDataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+                               SpecialityService specialitiesService, VisitService visitService, PetService petService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialitiesService = specialitiesService;
+        this.visitService = visitService;
+        this.petService = petService;
     }
 
     @Override
@@ -49,11 +52,19 @@ public class BootstrapDataLoader implements CommandLineRunner {
 
         Pet abhishekPetDog=new Pet();
         abhishekPetDog.setPetName("BhuBhu");
+        abhishekPetDog.setOwner(onr1);
         abhishekPetDog.setPetType(savedDogPetType);
         abhishekPetDog.setBirthDate(LocalDate.now());
         onr1.getPets().add(abhishekPetDog);
 
+
         ownerService.save(onr1);
+
+        Visit visitDog=new Visit();
+        visitDog.setDescription("Sneeze Dog");
+        visitDog.setPet(abhishekPetDog);
+        visitDog.setVisitDate(LocalDate.now());
+        visitService.save(visitDog);
 
         Owner onr2=new Owner();
         onr2.setFirstName("Tejal");
@@ -69,6 +80,13 @@ public class BootstrapDataLoader implements CommandLineRunner {
         tejalPetCat.setBirthDate(LocalDate.now());
         onr2.getPets().add(tejalPetCat);
         ownerService.save(onr2);
+
+
+        Visit visitCat=new Visit();
+        visitCat.setDescription("Sneeze Cat");
+        visitCat.setPet(tejalPetCat);
+        visitCat.setVisitDate(LocalDate.now());
+        visitService.save(visitCat);
 
         Speciality radiology=new Speciality();
         radiology.setDescription("Radiology");
@@ -97,8 +115,10 @@ public class BootstrapDataLoader implements CommandLineRunner {
 
         vetService.save(vet2);
 
-        System.out.println(ownerService.findAll().size());
-        System.out.println(vetService.findAll().size());
-        System.out.println(petTypeService.findAll().size());
+        System.out.println("Owner:"+ownerService.findAll().size());
+        System.out.println("Vet:"+vetService.findAll().size());
+        System.out.println("Pet:"+petTypeService.findAll().size());
+        System.out.println("Speciality:"+specialitiesService.findAll().size());
+        System.out.println("Visit:"+visitService.findAll().size());
     }
 }
