@@ -29,7 +29,7 @@ public abstract class AbstractMapService <T extends BaseEntity,ID extends Long>{
     }
 
     protected void delete(T model){
-      boolean isRemoved=map.entrySet().removeIf(e->e.equals(model));
+      boolean isRemoved=map.entrySet().removeIf(e->e.getValue().getId().equals(model.getId()));
       if (isRemoved)
           System.out.println("removed");
       else
