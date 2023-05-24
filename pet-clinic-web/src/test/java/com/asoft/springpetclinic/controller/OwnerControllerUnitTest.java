@@ -15,8 +15,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -36,8 +37,8 @@ class OwnerControllerUnitTest {
     @BeforeEach
     void setUp() {
         ownerSet=new HashSet<>();
-        ownerSet.add(Owner.builder().id(1l).build());
-        ownerSet.add(Owner.builder().id(2l).build());
+        ownerSet.add(Owner.builder().id(1l).firstName("abhishek").lastName("patil").build());
+        ownerSet.add(Owner.builder().id(2l).firstName("Tejal").lastName("patil").build());
         mockMvc= MockMvcBuilders.standaloneSetup(ownerController).build();
     }
 
@@ -71,5 +72,16 @@ class OwnerControllerUnitTest {
                 .andExpect(view().name("notImplemented"));
         verifyNoInteractions(ownerService);//because we have not implemented logic in controller class
         //so making sure out service class is not executed.
+    }
+    @Test
+    void showOwner() throws Exception {
+        when(ownerService.findById(anyLong())).thenReturn(Owner.builder().firstName("Tejal").lastName("patil").id(1l).build());
+        Owner owner= ownerService.findById(1l);
+        assertNotNull(owner);
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("owner",hasProperty("firstName",is("Tejal"))))
+                .andExpect(model().attribute("owner",hasProperty("lastName",is("patil"))))
+                .andExpect(view().name("owners/ownerDetails"));
     }
 }
