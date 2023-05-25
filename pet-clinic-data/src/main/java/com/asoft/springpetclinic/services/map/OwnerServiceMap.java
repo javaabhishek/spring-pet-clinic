@@ -76,4 +76,9 @@ public class OwnerServiceMap extends AbstractMapService<Owner,Long> implements O
                 .filter(ele->ele.getLastName().equalsIgnoreCase(lastName))
                 .findFirst().orElse(null);
     }
+
+    @Override
+    public Set<Owner> findAllOwnersByLastNameLike(String anyString) {
+        return null;
+    }
 }

@@ -4,9 +4,9 @@ import com.asoft.springpetclinic.model.Owner;
 import com.asoft.springpetclinic.services.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Set;
@@ -21,16 +21,43 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @RequestMapping({"","/","/index","/index.html"})
+    @InitBinder
+    public void setAllowedFields(WebDataBinder webDataBinder){
+        webDataBinder.setDisallowedFields("id");
+    }
+    /*@RequestMapping({"","/","/index","/index.html"})
     public String index(Model model){
         Set<Owner> owners=ownerService.findAll();
 
         model.addAttribute("owners",owners);
         return "owners/index";
-    }
+    }*/
     @RequestMapping("/find")
-    public String findOwners(){
-        return "notImplemented";
+    public String findOwners(Model model){
+        model.addAttribute("owner",Owner.builder().build());
+        return "owners/findOwners";
+    }
+
+    @GetMapping
+    public String processFindForm(@RequestParam(defaultValue = "1") int page, Owner owner, BindingResult result,
+                                  Model model) {
+        // allow parameterless GET request for /owners to return all records
+        if (owner.getLastName() == null) {
+            owner.setLastName(""); // empty string signifies broadest possible search
+        }
+        Set<Owner> ownersResults=ownerService.findAllOwnersByLastNameLike(owner.getLastName());
+        if (ownersResults.isEmpty()) {
+            // no owners found
+            result.rejectValue("lastName", "notFound", "not found");
+            return "owners/findOwners";
+        }
+        if (ownersResults.size() == 1) {
+            // 1 owner found
+            owner = ownersResults.iterator().next();
+            return "redirect:/owners/" + owner.getId();
+        }
+        model.addAttribute("listOwners",ownersResults);
+        return "/owners/ownersList";
     }
 
     @GetMapping("/{ownerId}")
