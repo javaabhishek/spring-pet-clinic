@@ -94,6 +94,15 @@ class OwnerControllerUnitTest {
                 .andExpect(view().name("/owners/ownersList"))
                 .andExpect(model().attribute("listOwners",hasSize(2)));
     }
+
+    @Test
+    void processFindOwnerReturnAllWithEmptyParam() throws Exception {
+        when(ownerService.findAllOwnersByLastNameLike("%"+""+"%")).thenReturn(ownerSet);
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/owners/ownersList"))
+                .andExpect(model().attribute("listOwners",hasSize(2)));
+    }
     @Test
     void showOwner() throws Exception {
         when(ownerService.findById(anyLong())).thenReturn(Owner.builder().firstName("Tejal").lastName("patil").id(1l).build());
