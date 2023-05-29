@@ -11,11 +11,21 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 //@EqualsAndHashCode(exclude = {"petType","owner","visits"})
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity{
+    @Builder
+    public Pet(Long id, String petName, PetType petType, Owner owner, LocalDate birthDate, Set<Visit> visits) {
+        super(id);
+        this.petName = petName;
+        this.petType = petType;
+        this.owner = owner;
+        this.birthDate = birthDate;
+        if(visits!=null){
+            this.visits = visits;
+        }
+    }
 
     @Column(name="pet_name")
     private String petName;
